@@ -14,22 +14,36 @@ namespace Xadrez_Console
 
                 while (!partida.Terminada)
                 {
-                    Console.Clear();
-                    tela.ImprimirTabuleiro(partida.tab);
-                    Console.WriteLine();
-                    Console.Write("Origem: ");
-                    Posicao origem = tela.LerPosicaoXadrez().ToPosicao();
+                    try
+                    {
+                        Console.Clear();
+                        tela.ImprimirTabuleiro(partida.tab);
+                        Console.WriteLine();
+                        Console.WriteLine("Turno: " + partida.Turno);
+                        Console.WriteLine("Aguardando Jogada: " + partida.JogadorAtual);
 
-                    bool[,] posicoesPossiveis = partida.tab.peca(origem).MovimentosPossiveis();
 
-                    Console.Clear();
-                    tela.ImprimirTabuleiro(partida.tab, posicoesPossiveis);
-                    Console.WriteLine();
-                    Console.Write("Destino: ");
-                    Posicao destino = tela.LerPosicaoXadrez().ToPosicao();
+                        Console.WriteLine();
+                        Console.Write("Origem: ");
+                        Posicao origem = tela.LerPosicaoXadrez().ToPosicao();
+                        partida.ValidarPosicaoOrigem(origem);
 
-                    partida.ExecutaMovimento(origem, destino);
-                    
+                        bool[,] posicoesPossiveis = partida.tab.peca(origem).MovimentosPossiveis();
+
+                        Console.Clear();
+                        tela.ImprimirTabuleiro(partida.tab, posicoesPossiveis);
+                        Console.WriteLine();
+                        Console.Write("Destino: ");
+                        Posicao destino = tela.LerPosicaoXadrez().ToPosicao();
+                        partida.ValidarPosicaoDestino(origem, destino);
+
+                        partida.RealizaJogada(origem, destino);
+                    }
+                    catch(TabuleiroExeption e)
+                    {
+                        Console.WriteLine(e.Message);
+                        Console.ReadLine();
+                    }
                 }
                
 
