@@ -42,7 +42,10 @@ namespace Xadrez_Console
                         Console.ReadLine();
                     }
                 }
-               
+
+                Console.Clear();
+                tela.ImprimirPartida(partida);
+
 
 
             }
